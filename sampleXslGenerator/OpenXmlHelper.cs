@@ -11,6 +11,8 @@ namespace sampleXslGenerator
 {
     public class OpenXmlHelper
     {
+
+       //this method is used to retrieve the part of the spread sheet we will write data to
         public static SheetData GetSheetDataPart(SpreadsheetDocument package)
         {
             var workBookPart = package.WorkbookPart;
@@ -19,9 +21,10 @@ namespace sampleXslGenerator
             return sheetData;
         }
 
-        public static Cell CreateInlineCell(string refrence, string value)
+        //the rest of the methods help us create diffetent types of cells
+        public static Cell CreateInlineCell(string reference, string value)
         {
-            Cell cell = new Cell { DataType = CellValues.InlineString, CellReference = refrence };
+            Cell cell = new Cell { DataType = CellValues.InlineString, CellReference = reference };
             Text t = new Text { Text = value };
             InlineString inlineString = new InlineString();
             inlineString.AppendChild(t);
@@ -29,21 +32,21 @@ namespace sampleXslGenerator
             return cell;
         }
 
-        public static Cell CreateDateCell(string refrence, DateTime value)
+        public static Cell CreateDateCell(string reference, DateTime value)
         {
-            Cell dateCell = new Cell() { CellReference = refrence, StyleIndex = (UInt32Value)1U };
+            Cell dateCell = new Cell() { CellReference = reference, StyleIndex = (UInt32Value)1U };
             CellValue cellValueDueDate = new CellValue();
             cellValueDueDate.Text = value.ToOADate().ToString();
             dateCell.Append(cellValueDueDate);
             return dateCell;
         }
 
-        public static Cell CreateFormulaCell(string refrence, string formular)
+        public static Cell CreateFormulaCell(string reference, string formular)
         {
             Cell cell = new Cell
             {
                 DataType = CellValues.Number,
-                CellReference = refrence,
+                CellReference = reference,
                 CellFormula = new CellFormula(formular)
             };
             return cell;
